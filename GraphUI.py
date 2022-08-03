@@ -10,17 +10,36 @@ import json
 import datetime
 
 CHALLONGE_API_URL = "https://api.challonge.com/v1/"
-CHALLONGE_API_KEY = "tIuDkLONDSXpWnVAODVvqCa8cqahooGtPqb745lA"
 STARTGG_API_URL = "https://api.start.gg/gql/alpha"
-STARTGG_API_KEY = "e290acba65f27003c0faa36f5b29f36d"
 global top_8
+CHALLONGE_API_KEY = ""
+STARTGG_API_KEY = ""
+
+# Get API keys from file. This is terrible security, but oh well.
+dirname = os.path.dirname(__file__)
+apikeys = os.path.join(dirname, "API_KEYS.csv")
+with open(apikeys, encoding='UTF8', newline='') as f:
+    fileReader = csv.reader(f, delimiter=',')
+
+    # Use linked portrait if player exists
+    for row in fileReader:
+        if (row[0].__contains__("CHALLONGE_API_KEY") and row[1]):
+            CHALLONGE_API_KEY = row[1]
+        if (row[0].__contains__("STARTGG_API_KEY") and row[1]):
+            STARTGG_API_KEY = row[1]
+
+if not CHALLONGE_API_KEY:
+    print("No Challonge API Key Found. Please add one in API_KEYS.csv")
+
+if not STARTGG_API_KEY:
+    print("No Start.gg API Key Found. Please add one in API_KEYS.csv")
 
 
 class mainWindow:
     def __init__(self, window):
         # Define variables
         dirname = os.path.dirname(__file__)
-        applicationLogoPath = os.path.join(dirname, "Sigmin AZ SK.png")
+        applicationLogoPath = os.path.join(dirname, "Graphic/Sigmin AZ SK.png")
         applicationLogo = PhotoImage(file=applicationLogoPath)
 
         # Construct the window
@@ -237,7 +256,7 @@ class importDialog:
         self.dlgImport.title("Import Tournament Information")
         self.dlgImport.geometry('200x100+50+50')
         dirname = os.path.dirname(__file__)
-        applicationLogoPath = os.path.join(dirname, "Sigmin AZ SK.png")
+        applicationLogoPath = os.path.join(dirname, "Graphic/Sigmin AZ SK.png")
         applicationLogo = PhotoImage(file=applicationLogoPath)
         self.dlgImport.iconphoto(False, applicationLogo)
 
@@ -564,17 +583,17 @@ class generateFinalGraphic:
         # Open file linking names to portraits
         dirname = os.path.dirname(__file__)
         playerPortairPath = os.path.join(dirname, "PlayerPortraits.csv")
-        background = os.path.join(dirname, "BlankParticipants.png")
+        background = os.path.join(dirname, "Graphic/BlankParticipants.png")
         backgroundPreview = Image.open(background).convert("RGBA")
-        template = os.path.join(dirname, "template.png")
+        template = os.path.join(dirname, "Graphic/template.png")
         templatePreview = Image.open(template).convert("RGBA")
 
         # Variables for final image
-        outfile = os.path.join(dirname, "FinalGraphic.png")
+        outfile = os.path.join(dirname, "Graphic/FinalGraphic.png")
         finalGraphic = Image.new("RGBA", templateSize)
 
         # Default character portrait
-        defaultportraitpath = os.path.join(dirname, "blankCharacter.png")
+        defaultportraitpath = os.path.join(dirname, "Graphic/blankCharacter.png")
         defaultpreview = Image.open(defaultportraitpath)
         player1Image = defaultpreview.resize(player1ImageSize)
         player2Image = defaultpreview.resize(player2ImageSize)
@@ -710,12 +729,12 @@ class generateFinalGraphic:
 
         try:
             if tournamentInfo["name"].__contains__("Kregg"):
-                castle = os.path.join(dirname, "BlankCastle.png")
+                castle = os.path.join(dirname, "Graphic/BlankCastle.png")
                 castlePreview = Image.open(castle).convert("RGBA")
                 finalGraphic.paste(castlePreview, templateRegion, castlePreview)
         except NameError:
             print("Not a Kregg's Castle")
-            azrivals = os.path.join(dirname, "BlankAZRivals.png")
+            azrivals = os.path.join(dirname, "Graphic/BlankAZRivals.png")
             azRivalsPreview = Image.open(azrivals).convert("RGBA")
             finalGraphic.paste(azRivalsPreview, templateRegion, azRivalsPreview)
 
