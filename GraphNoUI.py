@@ -1,18 +1,36 @@
 import os.path
 from tkinter import *
-from tkinter import ttk
 from tkinter import messagebox
 import challonge
-from PIL import ImageTk, Image, ImageFont, ImageDraw
+from PIL import Image, ImageFont, ImageDraw
 import csv
 import requests
 import json
 import datetime
 
+# Get API keys from file. This is terrible security, but oh well.
+dirname = os.path.dirname(__file__)
+apikeys = os.path.join(dirname, "API_KEYS.csv")
+with open(apikeys, encoding='UTF8', newline='') as f:
+    fileReader = csv.reader(f, delimiter=',')
+
+    # Use linked portrait if player exists
+    for row in fileReader:
+        if row[0].__contains__("CHALLONGE_API_KEY"):
+            CHALLONGE_API_KEY = row[1]
+        if row[0].__contains__("STARTGG_API_KEY"):
+            STARTGG_API_KEY = row[1]
+
+if not CHALLONGE_API_KEY:
+    print("No Challonge API Key Found. Please add one in API_KEYS.csv")
+
+if not STARTGG_API_KEY:
+    print("No Start.gg API Key Found. Please add one in API_KEYS.csv")
+
 CHALLONGE_API_URL = "https://api.challonge.com/v1/"
-CHALLONGE_API_KEY = "tIuDkLONDSXpWnVAODVvqCa8cqahooGtPqb745lA"
+#CHALLONGE_API_KEY = "tIuDkLONDSXpWnVAODVvqCa8cqahooGtPqb745lA"
 STARTGG_API_URL = "https://api.start.gg/gql/alpha"
-STARTGG_API_KEY = "e290acba65f27003c0faa36f5b29f36d"
+#STARTGG_API_KEY = "e290acba65f27003c0faa36f5b29f36d"
 global top_8
 
 
@@ -20,49 +38,6 @@ class mainWindow:
     def __init__(self, window):
         # Define variables
         dirname = os.path.dirname(__file__)
-        applicationLogoPath = os.path.join(dirname, "Sigmin AZ SK.png")
-        applicationLogo = PhotoImage(file=applicationLogoPath)
-
-        # Construct the window
-        #window.title("Top 8 Graphic")
-        #window.iconphoto(False, applicationLogo)
-
-        #window.geometry('800x400+50+50')  # width, height, from top, from left
-
-        # Define default icons
-        #defaultPortraitPath = os.path.join(dirname, "Characters/Zetterburn/1.png")
-        #defaultImage = Image.open(defaultPortraitPath)
-        #defaultImage1small = defaultImage.resize((20, 20))
-        #defaultPhotoImage = ImageTk.PhotoImage(defaultImage1small)
-
-        #self.image1 = Label(image=defaultPhotoImage)
-        #self.image1.image = defaultPhotoImage
-        #self.image2 = Label(image=defaultPhotoImage)
-        #self.image2.image = defaultPhotoImage
-        #self.image3 = Label(image=defaultPhotoImage)
-        #self.image3.image = defaultPhotoImage
-        #self.image4 = Label(image=defaultPhotoImage)
-        #self.image4.image = defaultPhotoImage
-        #self.image5 = Label(image=defaultPhotoImage)
-        #self.image5.image = defaultPhotoImage
-        #self.image6 = Label(image=defaultPhotoImage)
-        #self.image6.image = defaultPhotoImage
-        #self.image7 = Label(image=defaultPhotoImage)
-        #self.image7.image = defaultPhotoImage
-        #self.image8 = Label(image=defaultPhotoImage)
-        #self.image8.image = defaultPhotoImage
-
-        # Header bar
-        #self.menubar = Menu()
-        #self.filemenu = Menu(self.menubar, tearoff=0)
-        #self.importContent = importDialog(window)
-        #self.filemenu.add_command(label="Import...", command=self.importContent.openImportDialog)
-        #self.filemenu.add_separator()
-        #self.filemenu.add_command(label="Exit", command=window.quit)
-        #self.menubar.add_cascade(label="File", menu=self.filemenu)
-
-        #window.config(menu=self.menubar)
-        #menubar = Menu(window)
 
         # Sprite button settings
         self.characters = ('Absa', 'Clairen', 'Elliana', 'Etalus', 'Forsburn', 'Hodan', 'Kragg', 'Maypul', 'Mollo',
@@ -77,191 +52,40 @@ class mainWindow:
         self.playerSevenChar = StringVar()
         self.playerEightChar = StringVar()
 
-        # Player text fields
+        # Player name fields
         self.playerOne = StringVar()
-        #self.playerOneEntry = Entry(textvariable=self.playerOne)
-        #self.playerOneEntry.place(x=40, y=110)
         self.playerOne.set("Player 1")
-        #self.image1.place(x=15, y=107)
-        #playerOneSpriteButton = OptionMenu(window, self.playerOneChar, *self.characters,
-        #                                   command=lambda x: self.updateSprite(self.playerOneChar.get(), "One"))
-        #playerOneSpriteButton.place(x=15, y=130)
 
         self.playerTwo = StringVar()
-        #self.playerTwoEntry = ttk.Entry(textvariable=self.playerTwo)
-        #self.playerTwoEntry.place(x=200, y=30)
         self.playerTwo.set("Player 2")
-        #self.image2.place(x=175, y=27)
-        #playerTwoSpriteButton = OptionMenu(window, self.playerTwoChar, *self.characters,
-        #                                   command=lambda x: self.updateSprite(self.playerTwoChar.get(), "Two"))
-        #playerTwoSpriteButton.place(x=175, y=52)
 
         self.playerThree = StringVar()
-        #self.playerThreeEntry = ttk.Entry(textvariable=self.playerThree)
-        #self.playerThreeEntry.place(x=360, y=30)
         self.playerThree.set("Player 3")
-        #self.image3.place(x=335, y=27)
-        #playerThreeSpriteButton = OptionMenu(window, self.playerThreeChar, *self.characters,
-        #                                     command=lambda x: self.updateSprite(self.playerThreeChar.get(), "Three"))
-        #playerThreeSpriteButton.place(x=335, y=52)
 
         self.playerFour = StringVar()
-        #self.playerFourEntry = ttk.Entry(textvariable=self.playerFour)
-        #self.playerFourEntry.place(x=530, y=30)
         self.playerFour.set("Player 4")
-        #self.image4.place(x=505, y=27)
-        #playerFourSpriteButton = OptionMenu(window, self.playerFourChar, *self.characters,
-        #                                    command=lambda x: self.updateSprite(self.playerFourChar.get(), "Four"))
-        #playerFourSpriteButton.place(x=505, y=52)
 
         self.playerFive = StringVar()
-        #self.playerFiveEntry = ttk.Entry(textvariable=self.playerFive)
-        #self.playerFiveEntry.place(x=170, y=163)
         self.playerFive.set("Player 5")
-        #self.image5.place(x=145, y=160)
-        #playerFiveSpriteButton = OptionMenu(window, self.playerFiveChar, *self.characters,
-        #                                    command=lambda x: self.updateSprite(self.playerFiveChar.get(), "Five"))
-        #playerFiveSpriteButton.place(x=145, y=185)
-
 
         self.playerSix = StringVar()
-        #self.playerSixEntry = ttk.Entry(textvariable=self.playerSix)
-        #self.playerSixEntry.place(x=320, y=163)
         self.playerSix.set("Player 6")
-        #self.image6.place(x=295, y=160)
-        #playerSixSpriteButton = OptionMenu(window, self.playerSixChar, *self.characters,
-        #                                   command=lambda x: self.updateSprite(self.playerSixChar.get(), "Six"))
-        #playerSixSpriteButton.place(x=295, y=185)
 
         self.playerSeven = StringVar()
-        #self.playerSevenEntry = ttk.Entry(textvariable=self.playerSeven)
-        #self.playerSevenEntry.place(x=470, y=163)
         self.playerSeven.set("Player 7")
-        #self.image7.place(x=445, y=160)
-        #playerSevenSpriteButton = OptionMenu(window, self.playerSevenChar, *self.characters,
-        #                                     command=lambda x: self.updateSprite(self.playerSevenChar.get(), "Seven"))
-        #playerSevenSpriteButton.place(x=445, y=185)
 
         self.playerEight = StringVar()
-        #self.playerEightEntry = ttk.Entry(textvariable=self.playerEight)
-        #self.playerEightEntry.place(x=620, y=163)
         self.playerEight.set("Player 8")
-        #self.image8.place(x=595, y=160)
-        #playerEightSpriteButton = OptionMenu(window, self.playerEightChar, *self.characters,
-        #                                     command=lambda x: self.updateSprite(self.playerEightChar.get(), "Eight"))
-        #playerEightSpriteButton.place(x=595, y=185)
 
         # Create Top 8 Graphic button
-        self.graphicContent = generateFinalGraphic()
-        #generateGraphicButton = Button(text="Generate", command=self.graphicContent.generateGraphic)
-        #generateGraphicButton.place(x=600, y=250)
-
-    def updateSprite(self, character, player):
-        dirname = os.path.dirname(__file__)
-        SPRITE_SIZE = (20, 20)
-        print("Player: " + player + " Character: " + character)
-        if player == "One":
-            spritePath = "Characters/" + character + "/1.png"
-            playerSpritePath = os.path.join(dirname, spritePath)
-            portraitPreview = Image.open(playerSpritePath)
-            portraitPreviewSmall = portraitPreview.resize(SPRITE_SIZE)
-            portraitImage = ImageTk.PhotoImage(portraitPreviewSmall)
-            application.image1.configure(image=portraitImage)
-            application.image1.image = portraitImage
-        if player == "Two":
-            spritePath = "Characters/" + character + "/1.png"
-            playerSpritePath = os.path.join(dirname, spritePath)
-            portraitPreview = Image.open(playerSpritePath)
-            portraitPreviewSmall = portraitPreview.resize(SPRITE_SIZE)
-            portraitImage = ImageTk.PhotoImage(portraitPreviewSmall)
-            application.image2.configure(image=portraitImage)
-            application.image2.image = portraitImage
-        if player == "Three":
-            spritePath = "Characters/" + character + "/1.png"
-            playerSpritePath = os.path.join(dirname, spritePath)
-            portraitPreview = Image.open(playerSpritePath)
-            portraitPreviewSmall = portraitPreview.resize(SPRITE_SIZE)
-            portraitImage = ImageTk.PhotoImage(portraitPreviewSmall)
-            application.image3.configure(image=portraitImage)
-            application.image3.image = portraitImage
-        if player == "Four":
-            spritePath = "Characters/" + character + "/1.png"
-            playerSpritePath = os.path.join(dirname, spritePath)
-            portraitPreview = Image.open(playerSpritePath)
-            portraitPreviewSmall = portraitPreview.resize(SPRITE_SIZE)
-            portraitImage = ImageTk.PhotoImage(portraitPreviewSmall)
-            application.image4.configure(image=portraitImage)
-            application.image4.image = portraitImage
-        if player == "Five":
-            spritePath = "Characters/" + character + "/1.png"
-            playerSpritePath = os.path.join(dirname, spritePath)
-            portraitPreview = Image.open(playerSpritePath)
-            portraitPreviewSmall = portraitPreview.resize(SPRITE_SIZE)
-            portraitImage = ImageTk.PhotoImage(portraitPreviewSmall)
-            application.image5.configure(image=portraitImage)
-            application.image5.image = portraitImage
-        if player == "Six":
-            spritePath = "Characters/" + character + "/1.png"
-            playerSpritePath = os.path.join(dirname, spritePath)
-            portraitPreview = Image.open(playerSpritePath)
-            portraitPreviewSmall = portraitPreview.resize(SPRITE_SIZE)
-            portraitImage = ImageTk.PhotoImage(portraitPreviewSmall)
-            application.image6.configure(image=portraitImage)
-            application.image6.image = portraitImage
-        if player == "Seven":
-            spritePath = "Characters/" + character + "/1.png"
-            playerSpritePath = os.path.join(dirname, spritePath)
-            portraitPreview = Image.open(playerSpritePath)
-            portraitPreviewSmall = portraitPreview.resize(SPRITE_SIZE)
-            portraitImage = ImageTk.PhotoImage(portraitPreviewSmall)
-            application.image7.configure(image=portraitImage)
-            application.image7.image = portraitImage
-        if player == "Eight":
-            spritePath = "Characters/" + character + "/1.png"
-            playerSpritePath = os.path.join(dirname, spritePath)
-            portraitPreview = Image.open(playerSpritePath)
-            portraitPreviewSmall = portraitPreview.resize(SPRITE_SIZE)
-            portraitImage = ImageTk.PhotoImage(portraitPreviewSmall)
-            application.image8.configure(image=portraitImage)
-            application.image8.image = portraitImage
+        #self.graphicContent = generateFinalGraphic()
 
 
 class importDialog:
     def __init__(self):
-        #self.tournament = None
-        #self.challongeTournament = StringVar()
-        print("foo")
-
-    def openImportDialog(self):
-        # Construct the window
-        #self.dlgImport = Toplevel(window)
-        #self.dlgImport.title("Import Tournament Information")
-        #self.dlgImport.geometry('200x100+50+50')
-        dirname = os.path.dirname(__file__)
-        #applicationLogoPath = os.path.join(dirname, "Sigmin AZ SK.png")
-        #applicationLogo = PhotoImage(file=applicationLogoPath)
-        #self.dlgImport.iconphoto(False, applicationLogo)
-
-        # Import field and button
-        #challongeTournamentEntry = ttk.Entry(self.dlgImport, textvariable=self.challongeTournament)
-        #challongeTournamentEntry.pack()
-        #importButton = Button(self.dlgImport, text="Import from Challonge", command=self.importfromchallonge)
-        #importButton.pack()
-        #self.dlgImport.bind('<Return>', func=self.importfromchallonge)
-
-        # Start GG Import
-        #importStartGGButton = Button(self.dlgImport, text="Import from Start.gg", command=self.importFromStartGG)
-        #importStartGGButton.pack()
-
-        # Set focus on text entry
-        #challongeTournamentEntry.focus_set()
+        print("")
 
     def importfromchallonge(self, event=None):
-        # Open file linking names to portraits
-        dirname = os.path.dirname(__file__)
-        playerPortaitPath = os.path.join(dirname, "PlayerPortraits.csv")
-        PORTRAIT_SIZE = (20, 20)
-
         # Tell pychallonge about your [CHALLONGE! API credentials](http://api.challonge.com/v1).
         challonge.set_credentials("Sigmin", CHALLONGE_API_KEY)
 
@@ -272,7 +96,6 @@ class importDialog:
         except:
             messagebox.showerror('Import Error', 'There was an import error')
             self.challongeTournament = ''
-            self.openImportDialog()
 
         global tournamentInfo
         tournamentInfo = tournament
@@ -299,7 +122,7 @@ class importDialog:
         except NameError:
             print("No Start.gg Tournament to clear")
 
-        self.updateUIwithPlayers()
+        self.updatePlayers()
         self.graphicContent = generateFinalGraphic()
         self.graphicContent.generateGraphic()
 
@@ -399,9 +222,11 @@ class importDialog:
         except NameError:
             print("No Challonge Tournament to clear")
 
-        self.updateUIwithPlayers()
+        self.updatePlayers()
+        self.graphicContent = generateFinalGraphic()
+        self.graphicContent.generateGraphic()
 
-    def updateUIwithPlayers(self):
+    def updatePlayers(self):
 
         # Open file linking names to portraits
         dirname = os.path.dirname(__file__)
@@ -415,12 +240,6 @@ class importDialog:
                 fileReader = csv.reader(f, delimiter=',')
                 for row in fileReader:
                     if row[0].__contains__(application.playerOne.get()) or application.playerOne.get().__contains__(row[0]):
-                        #customerPortraitPath = os.path.join(dirname, row[1])
-                        #portraitPreview = Image.open(customerPortraitPath)
-                        #portraitPreviewSmall = portraitPreview.resize(PORTRAIT_SIZE)
-                        #portraitImage = ImageTk.PhotoImage(portraitPreviewSmall)
-                        #application.image1.configure(image=portraitImage)
-                        #application.image1.image = portraitImage
                         char = row[1].split("/")
                         application.playerOneChar.set(char[1])
         if top_8[1]:
@@ -429,12 +248,6 @@ class importDialog:
                 fileReader = csv.reader(f, delimiter=',')
                 for row in fileReader:
                     if row[0].__contains__(application.playerTwo.get()) or application.playerTwo.get().__contains__(row[0]):
-                        #customerPortraitPath = os.path.join(dirname, row[1])
-                        #portraitPreview = Image.open(customerPortraitPath)
-                        #portraitPreviewSmall = portraitPreview.resize(PORTRAIT_SIZE)
-                        #portraitImage = ImageTk.PhotoImage(portraitPreviewSmall)
-                        #application.image2.configure(image=portraitImage)
-                        #application.image2.image = portraitImage
                         char = row[1].split("/")
                         application.playerTwoChar.set(char[1])
         if top_8[2]:
@@ -443,12 +256,6 @@ class importDialog:
                 fileReader = csv.reader(f, delimiter=',')
                 for row in fileReader:
                     if row[0].__contains__(application.playerThree.get()) or application.playerThree.get().__contains__(row[0]):
-                        #customerPortraitPath = os.path.join(dirname, row[1])
-                        #portraitPreview = Image.open(customerPortraitPath)
-                        #portraitPreviewSmall = portraitPreview.resize(PORTRAIT_SIZE)
-                        #portraitImage = ImageTk.PhotoImage(portraitPreviewSmall)
-                        #application.image3.configure(image=portraitImage)
-                        #application.image3.image = portraitImage
                         char = row[1].split("/")
                         application.playerThreeChar.set(char[1])
         if top_8[3]:
@@ -457,12 +264,6 @@ class importDialog:
                 fileReader = csv.reader(f, delimiter=',')
                 for row in fileReader:
                     if row[0].__contains__(application.playerFour.get()) or application.playerFour.get().__contains__(row[0]):
-                        #customerPortraitPath = os.path.join(dirname, row[1])
-                        #portraitPreview = Image.open(customerPortraitPath)
-                        #portraitPreviewSmall = portraitPreview.resize(PORTRAIT_SIZE)
-                        #portraitImage = ImageTk.PhotoImage(portraitPreviewSmall)
-                        #application.image4.configure(image=portraitImage)
-                        #application.image4.image = portraitImage
                         char = row[1].split("/")
                         application.playerFourChar.set(char[1])
         if top_8[4]:
@@ -471,12 +272,6 @@ class importDialog:
                 fileReader = csv.reader(f, delimiter=',')
                 for row in fileReader:
                     if row[0].__contains__(application.playerFive.get()) or application.playerFive.get().__contains__(row[0]):
-                        #customerPortraitPath = os.path.join(dirname, row[1])
-                        #portraitPreview = Image.open(customerPortraitPath)
-                        #portraitPreviewSmall = portraitPreview.resize(PORTRAIT_SIZE)
-                        #portraitImage = ImageTk.PhotoImage(portraitPreviewSmall)
-                        #application.image5.configure(image=portraitImage)
-                        #application.image5.image = portraitImage
                         char = row[1].split("/")
                         application.playerFiveChar.set(char[1])
         if top_8[5]:
@@ -485,12 +280,6 @@ class importDialog:
                 fileReader = csv.reader(f, delimiter=',')
                 for row in fileReader:
                     if row[0].__contains__(application.playerSix.get()) or application.playerSix.get().__contains__(row[0]):
-                        #customerPortraitPath = os.path.join(dirname, row[1])
-                        #portraitPreview = Image.open(customerPortraitPath)
-                        #portraitPreviewSmall = portraitPreview.resize(PORTRAIT_SIZE)
-                        #portraitImage = ImageTk.PhotoImage(portraitPreviewSmall)
-                        #application.image6.configure(image=portraitImage)
-                        #application.image6.image = portraitImage
                         char = row[1].split("/")
                         application.playerSixChar.set(char[1])
         if len(top_8) > 6:
@@ -499,12 +288,6 @@ class importDialog:
                 fileReader = csv.reader(f, delimiter=',')
                 for row in fileReader:
                     if row[0].__contains__(application.playerSeven.get()) or application.playerSeven.get().__contains__(row[0]):
-                        #customerPortraitPath = os.path.join(dirname, row[1])
-                        #portraitPreview = Image.open(customerPortraitPath)
-                        #portraitPreviewSmall = portraitPreview.resize(PORTRAIT_SIZE)
-                        #portraitImage = ImageTk.PhotoImage(portraitPreviewSmall)
-                        #application.image7.configure(image=portraitImage)
-                        #application.image7.image = portraitImage
                         char = row[1].split("/")
                         application.playerSevenChar.set(char[1])
         else:
@@ -515,23 +298,13 @@ class importDialog:
                 fileReader = csv.reader(f, delimiter=',')
                 for row in fileReader:
                     if row[0].__contains__(application.playerEight.get()) or application.playerEight.get().__contains__(row[0]):
-                        #customerPortraitPath = os.path.join(dirname, row[1])
-                        #portraitPreview = Image.open(customerPortraitPath)
-                        #portraitPreviewSmall = portraitPreview.resize(PORTRAIT_SIZE)
-                        #portraitImage = ImageTk.PhotoImage(portraitPreviewSmall)
-                        #application.image8.configure(image=portraitImage)
-                        #application.image8.image = portraitImage
                         char = row[1].split("/")
                         application.playerEightChar.set(char[1])
         else:
             application.playerEight.set('')
 
-        # Close the Top Level window after import
-        #self.dlgImport.destroy()
-
 
 class generateFinalGraphic:
-
     def __init__(self):
         print()
 
@@ -568,17 +341,17 @@ class generateFinalGraphic:
         # Open file linking names to portraits
         dirname = os.path.dirname(__file__)
         playerPortairPath = os.path.join(dirname, "PlayerPortraits.csv")
-        background = os.path.join(dirname, "BlankParticipants.png")
+        background = os.path.join(dirname, "Graphic/BlankParticipants.png")
         backgroundPreview = Image.open(background).convert("RGBA")
-        template = os.path.join(dirname, "template.png")
+        template = os.path.join(dirname, "Graphic/template.png")
         templatePreview = Image.open(template).convert("RGBA")
 
         # Variables for final image
-        outfile = os.path.join(dirname, "FinalGraphic.png")
+        outfile = os.path.join(dirname, "Graphic/FinalGraphic.png")
         finalGraphic = Image.new("RGBA", templateSize)
 
         # Default character portrait
-        defaultportraitpath = os.path.join(dirname, "blankCharacter.png")
+        defaultportraitpath = os.path.join(dirname, "Graphic/blankCharacter.png")
         defaultpreview = Image.open(defaultportraitpath)
         player1Image = defaultpreview.resize(player1ImageSize)
         player2Image = defaultpreview.resize(player2ImageSize)
@@ -713,13 +486,14 @@ class generateFinalGraphic:
             print("No player 8 character")
 
         try:
+            # If the tournament is a Kregg's Castle, apply custom background
             if tournamentInfo["name"].__contains__("Kregg"):
-                castle = os.path.join(dirname, "BlankCastle.png")
+                castle = os.path.join(dirname, "Graphic/BlankCastle.png")
                 castlePreview = Image.open(castle).convert("RGBA")
                 finalGraphic.paste(castlePreview, templateRegion, castlePreview)
         except NameError:
             print("Not a Kregg's Castle")
-            azrivals = os.path.join(dirname, "BlankAZRivals.png")
+            azrivals = os.path.join(dirname, "Graphic/BlankAZRivals.png")
             azRivalsPreview = Image.open(azrivals).convert("RGBA")
             finalGraphic.paste(azRivalsPreview, templateRegion, azRivalsPreview)
 
