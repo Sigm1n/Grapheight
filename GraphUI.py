@@ -694,37 +694,51 @@ class generateFinalGraphic:
 
         try:
             finalGraphic.paste(player2Image, player2Region, player2Image)
+            player2exists = True
         except ValueError:
+            player2exists = False
             print("No player 2 character")
 
         try:
             finalGraphic.paste(player3Image, player3Region, player3Image)
+            player3exists = True
         except ValueError:
+            player3exists = False
             print("No player 3 character")
 
         try:
             finalGraphic.paste(player4Image, player4Region, player4Image)
+            player4exists = True
         except ValueError:
+            player4exists = False
             print("No player 4 character")
 
         try:
             finalGraphic.paste(player5Image, player5Region, player5Image)
+            player5exists = True
         except ValueError:
+            player5exists = False
             print("No player 5 character")
 
         try:
             finalGraphic.paste(player6Image, player6Region, player6Image)
+            player6exists = True
         except ValueError:
+            player6exists = False
             print("No player 6 character")
 
         try:
             finalGraphic.paste(player7Image, player7Region, player7Image)
+            player7exists = True
         except ValueError:
+            player7exists = False
             print("No player 7 character")
 
         try:
             finalGraphic.paste(player8Image, player8Region, player8Image)
+            player8exists = True
         except ValueError:
+            player8exists = False
             print("No player 8 character")
 
         try:
@@ -761,31 +775,45 @@ class generateFinalGraphic:
         player8Shadow = tuple(map(sum, zip(player8Number, rightShadow)))
 
         textDraw.text(player1Shadow, "1", grey, font=firstFont)
-        textDraw.text(player2Shadow, "2", grey, font=topRowFont)
-        textDraw.text(player3Shadow, "3", grey, font=topRowFont)
-        textDraw.text(player4Shadow, "4", grey, font=topRowFont)
-        textDraw.text(player5Shadow, "5", grey, font=bottomRowFont)
-        textDraw.text(player6Shadow, "5", grey, font=bottomRowFont)
-        textDraw.text(player7Shadow, "7", grey, font=bottomRowFont)
-        textDraw.text(player8Shadow, "7", grey, font=bottomRowFont)
+        if player2exists:
+            textDraw.text(player2Shadow, "2", grey, font=topRowFont)
+        if player3exists:
+            textDraw.text(player3Shadow, "3", grey, font=topRowFont)
+        if player4exists:
+            textDraw.text(player4Shadow, "4", grey, font=topRowFont)
+        if player5exists:
+            textDraw.text(player5Shadow, "5", grey, font=bottomRowFont)
+        if player6exists:
+            textDraw.text(player6Shadow, "5", grey, font=bottomRowFont)
+        if player7exists:
+            textDraw.text(player7Shadow, "7", grey, font=bottomRowFont)
+        if player8exists:
+            textDraw.text(player8Shadow, "7", grey, font=bottomRowFont)
 
         # Number Placings text
         textDraw.text(player1Number, "1", white, font=firstFont)
-        textDraw.text(player2Number, "2", white, font=topRowFont)
-        textDraw.text(player3Number, "3", white, font=topRowFont)
-        textDraw.text(player4Number, "4", white, font=topRowFont)
-        textDraw.text(player5Number, "5", white, font=bottomRowFont)
-        textDraw.text(player6Number, "5", white, font=bottomRowFont)
-        textDraw.text(player7Number, "7", white, font=bottomRowFont)
-        textDraw.text(player8Number, "7", white, font=bottomRowFont)
+        if player2exists:
+            textDraw.text(player2Number, "2", white, font=topRowFont)
+        if player3exists:
+            textDraw.text(player3Number, "3", white, font=topRowFont)
+        if player4exists:
+            textDraw.text(player4Number, "4", white, font=topRowFont)
+        if player5exists:
+            textDraw.text(player5Number, "5", white, font=bottomRowFont)
+        if player6exists:
+            textDraw.text(player6Number, "5", white, font=bottomRowFont)
+        if player7exists:
+            textDraw.text(player7Number, "7", white, font=bottomRowFont)
+        if player8exists:
+            textDraw.text(player8Number, "7", white, font=bottomRowFont)
 
         # Player Name Shadows
         firstShadowLocation = (30, 480, 0, 0)
         topShadowLocation = (15, 215, 0, 0)
         bottomShadowLocation = (12, 165, 0, 0)
         fontSize = int(450/len(application.playerOne.get()))
-        if fontSize < 50:
-            fontSize = 50
+        if fontSize < 80:
+            fontSize = 80
         if fontSize > 130:
             fontSize = 130
         firstNameFont = ImageFont.truetype(imageFont, fontSize)
@@ -802,13 +830,20 @@ class generateFinalGraphic:
         player8NameShadow = tuple(map(sum, zip(player8Region, bottomShadowLocation)))
 
         textDraw.text(player1NameShadow, application.playerOne.get(), grey, font=firstNameFont, anchor="ls")
-        textDraw.text(player2NameShadow, application.playerTwo.get(), grey, font=topNameFont)
-        textDraw.text(player3NameShadow, application.playerThree.get(), grey, font=topNameFont)
-        textDraw.text(player4NameShadow, application.playerFour.get(), grey, font=topNameFont)
-        textDraw.text(player5NameShadow, application.playerFive.get(), grey, font=bottomNameFont)
-        textDraw.text(player6NameShadow, application.playerSix.get(), grey, font=bottomNameFont)
-        textDraw.text(player7NameShadow, application.playerSeven.get(), grey, font=bottomNameFont)
-        textDraw.text(player8NameShadow, application.playerEight.get(), grey, font=bottomNameFont)
+        if player2exists:
+            textDraw.text(player2NameShadow, application.playerTwo.get(), grey, font=topNameFont)
+        if player3exists:
+            textDraw.text(player3NameShadow, application.playerThree.get(), grey, font=topNameFont)
+        if player4exists:
+            textDraw.text(player4NameShadow, application.playerFour.get(), grey, font=topNameFont)
+        if player5exists:
+            textDraw.text(player5NameShadow, application.playerFive.get(), grey, font=bottomNameFont)
+        if player6exists:
+            textDraw.text(player6NameShadow, application.playerSix.get(), grey, font=bottomNameFont)
+        if player7exists:
+            textDraw.text(player7NameShadow, application.playerSeven.get(), grey, font=bottomNameFont)
+        if player8exists:
+            textDraw.text(player8NameShadow, application.playerEight.get(), grey, font=bottomNameFont)
 
         # Player Names
         firstLocation = (25, 470, 0, 0)
@@ -825,13 +860,20 @@ class generateFinalGraphic:
         player8Name = tuple(map(sum, zip(player8Region, bottomLocation)))
 
         textDraw.text(player1Name, application.playerOne.get(), white, font=firstNameFont, anchor="ls")
-        textDraw.text(player2Name, application.playerTwo.get(), white, font=topNameFont)
-        textDraw.text(player3Name, application.playerThree.get(), white, font=topNameFont)
-        textDraw.text(player4Name, application.playerFour.get(), white, font=topNameFont)
-        textDraw.text(player5Name, application.playerFive.get(), white, font=bottomNameFont)
-        textDraw.text(player6Name, application.playerSix.get(), white, font=bottomNameFont)
-        textDraw.text(player7Name, application.playerSeven.get(), white, font=bottomNameFont)
-        textDraw.text(player8Name, application.playerEight.get(), white, font=bottomNameFont)
+        if player2exists:
+            textDraw.text(player2Name, application.playerTwo.get(), white, font=topNameFont)
+        if player3exists:
+            textDraw.text(player3Name, application.playerThree.get(), white, font=topNameFont)
+        if player4exists:
+            textDraw.text(player4Name, application.playerFour.get(), white, font=topNameFont)
+        if player5exists:
+            textDraw.text(player5Name, application.playerFive.get(), white, font=bottomNameFont)
+        if player6exists:
+            textDraw.text(player6Name, application.playerSix.get(), white, font=bottomNameFont)
+        if player7exists:
+            textDraw.text(player7Name, application.playerSeven.get(), white, font=bottomNameFont)
+        if player8exists:
+            textDraw.text(player8Name, application.playerEight.get(), white, font=bottomNameFont)
 
         # Tournament Info
         particpantFont = ImageFont.truetype(imageFont, 28)
