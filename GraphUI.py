@@ -742,7 +742,7 @@ class generateFinalGraphic:
             print("No player 8 character")
 
         try:
-            if tournamentInfo["name"].__contains__("Kregg"):
+            if tournamentInfo["name"].__contains__("Kregg") or tournamentInfo["name"].__contains__("Castle"):
                 castle = os.path.join(dirname, "Graphic/BlankCastle.png")
                 castlePreview = Image.open(castle).convert("RGBA")
                 finalGraphic.paste(castlePreview, templateRegion, castlePreview)
