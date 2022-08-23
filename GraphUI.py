@@ -96,6 +96,16 @@ class mainWindow:
         self.playerSevenChar = StringVar()
         self.playerEightChar = StringVar()
 
+        # Player Secondaries variables
+        self.playerOneSecondary = StringVar()
+        self.playerTwoSecondary = StringVar()
+        self.playerThreeSecondary = StringVar()
+        self.playerFourSecondary = StringVar()
+        self.playerFiveSecondary = StringVar()
+        self.playerSixSecondary = StringVar()
+        self.playerSevenSecondary = StringVar()
+        self.playerEightSecondary = StringVar()
+
         # Player text fields
         self.playerOne = StringVar()
         self.playerOneEntry = Entry(textvariable=self.playerOne)
@@ -105,6 +115,8 @@ class mainWindow:
         playerOneSpriteButton = OptionMenu(window, self.playerOneChar, *self.characters,
                                            command=lambda x: self.updateSprite(self.playerOneChar.get(), "One"))
         playerOneSpriteButton.place(x=15, y=130)
+        playerOneSecondaryButton = OptionMenu(window, self.playerOneSecondary, *self.characters)
+        playerOneSecondaryButton.place(x=15, y=158)
 
         self.playerTwo = StringVar()
         self.playerTwoEntry = ttk.Entry(textvariable=self.playerTwo)
@@ -114,6 +126,8 @@ class mainWindow:
         playerTwoSpriteButton = OptionMenu(window, self.playerTwoChar, *self.characters,
                                            command=lambda x: self.updateSprite(self.playerTwoChar.get(), "Two"))
         playerTwoSpriteButton.place(x=175, y=52)
+        playerTwoSecondaryButton = OptionMenu(window, self.playerTwoSecondary, *self.characters)
+        playerTwoSecondaryButton.place(x=175, y=80)
 
         self.playerThree = StringVar()
         self.playerThreeEntry = ttk.Entry(textvariable=self.playerThree)
@@ -123,6 +137,8 @@ class mainWindow:
         playerThreeSpriteButton = OptionMenu(window, self.playerThreeChar, *self.characters,
                                            command=lambda x: self.updateSprite(self.playerThreeChar.get(), "Three"))
         playerThreeSpriteButton.place(x=335, y=52)
+        playerThreeSecondaryButton = OptionMenu(window, self.playerThreeSecondary, *self.characters)
+        playerThreeSecondaryButton.place(x=335, y=80)
 
         self.playerFour = StringVar()
         self.playerFourEntry = ttk.Entry(textvariable=self.playerFour)
@@ -132,6 +148,8 @@ class mainWindow:
         playerFourSpriteButton = OptionMenu(window, self.playerFourChar, *self.characters,
                                              command=lambda x: self.updateSprite(self.playerFourChar.get(), "Four"))
         playerFourSpriteButton.place(x=505, y=52)
+        playerFourSecondaryButton = OptionMenu(window, self.playerFourSecondary, *self.characters)
+        playerFourSecondaryButton.place(x=505, y=80)
 
         self.playerFive = StringVar()
         self.playerFiveEntry = ttk.Entry(textvariable=self.playerFive)
@@ -141,6 +159,8 @@ class mainWindow:
         playerFiveSpriteButton = OptionMenu(window, self.playerFiveChar, *self.characters,
                                             command=lambda x: self.updateSprite(self.playerFiveChar.get(), "Five"))
         playerFiveSpriteButton.place(x=145, y=185)
+        playerFiveSecondaryButton = OptionMenu(window, self.playerFiveSecondary, *self.characters)
+        playerFiveSecondaryButton.place(x=145, y=213)
 
 
         self.playerSix = StringVar()
@@ -151,6 +171,8 @@ class mainWindow:
         playerSixSpriteButton = OptionMenu(window, self.playerSixChar, *self.characters,
                                             command=lambda x: self.updateSprite(self.playerSixChar.get(), "Six"))
         playerSixSpriteButton.place(x=295, y=185)
+        playerSixSecondaryButton = OptionMenu(window, self.playerSixSecondary, *self.characters)
+        playerSixSecondaryButton.place(x=295, y=213)
 
         self.playerSeven = StringVar()
         self.playerSevenEntry = ttk.Entry(textvariable=self.playerSeven)
@@ -160,6 +182,8 @@ class mainWindow:
         playerSevenSpriteButton = OptionMenu(window, self.playerSevenChar, *self.characters,
                                            command=lambda x: self.updateSprite(self.playerSevenChar.get(), "Seven"))
         playerSevenSpriteButton.place(x=445, y=185)
+        playerSevenSecondaryButton = OptionMenu(window, self.playerSevenSecondary, *self.characters)
+        playerSevenSecondaryButton.place(x=445, y=213)
 
         self.playerEight = StringVar()
         self.playerEightEntry = ttk.Entry(textvariable=self.playerEight)
@@ -169,6 +193,8 @@ class mainWindow:
         playerEightSpriteButton = OptionMenu(window, self.playerEightChar, *self.characters,
                                              command=lambda x: self.updateSprite(self.playerEightChar.get(), "Eight"))
         playerEightSpriteButton.place(x=595, y=185)
+        playerEightSecondaryButton = OptionMenu(window, self.playerEightSecondary, *self.characters)
+        playerEightSecondaryButton.place(x=595, y=213)
 
         # Create Top 8 Graphic button
         self.graphicContent = generateFinalGraphic()
@@ -557,27 +583,35 @@ class generateFinalGraphic:
         player1Region = (53, 135, 536, 618)  # (left, upper, right, lower)
         player1ImageSize = (483, 483)
         player1Number = (75, 100, 536, 618)
+        player1SecLoc = (480, 155, 510, 185)
         player2Region = (553, 135, 811, 393)  # (left, upper, right, lower)
         player2ImageSize = (258, 258)
         player2Number = (562, 125, 536, 618)
+        player2SecLoc = (772, 145, 802, 175)
         player3Region = (831, 135, 1089, 393)  # (left, upper, right, lower)
         player3ImageSize = (258, 258)
         player3Number = (840, 125, 536, 618)
+        player3SecLoc = (1050, 145, 1080, 175)
         player4Region = (1110, 135, 1368, 393)  # (left, upper, right, lower)
         player4ImageSize = (258, 258)
         player4Number = (1119, 125, 536, 618)
+        player4SecLoc = (1329, 145, 1359, 175)
         player5Region = (552, 441, 745, 634)  # (left, upper, right, lower)
         player5ImageSize = (193, 193)
         player5Number = (561, 431, 536, 618)
+        player5SecLoc = (708, 448, 738, 478)
         player6Region = (760, 441, 953, 634)  # (left, upper, right, lower)
         player6ImageSize = (193, 193)
         player6Number = (769, 441, 536, 618)
+        player6SecLoc = (915, 448, 945, 478)
         player7Region = (967, 441, 1160, 634)  # (left, upper, right, lower)
         player7ImageSize = (193, 193)
         player7Number = (976, 431, 536, 618)
+        player7SecLoc = (1122, 448, 1152, 478)
         player8Region = (1175, 441, 1368, 634)  # (left, upper, right, lower)
         player8ImageSize = (193, 193)
         player8Number = (1184, 441, 536, 618)
+        player8SecLoc = (1330, 448, 1360, 478)
         imageFont = "BLKCHCRY.TTF"
 
         # Open file linking names to portraits
@@ -637,6 +671,40 @@ class generateFinalGraphic:
             player8portraitpath = os.path.join(dirname, 'Characters/' + application.playerEightChar.get() + '/Full.png')
             portraitpreview = Image.open(player8portraitpath).convert("RGBA")
             player8Image = portraitpreview.resize(player8ImageSize)
+
+        # Set Secondaries selected from UI
+        if application.playerOneSecondary.get():
+            player1secondarypath = os.path.join(dirname, 'Characters/' + application.playerOneSecondary.get() + '/1.png')
+            player1SecondaryPreview = Image.open(player1secondarypath).convert("RGBA")
+            player1Secondary = player1SecondaryPreview.resize((30, 30))
+        if application.playerTwoSecondary.get():
+            player2secondarypath = os.path.join(dirname, 'Characters/' + application.playerTwoSecondary.get() + '/1.png')
+            player2SecondaryPreview = Image.open(player2secondarypath).convert("RGBA")
+            player2Secondary = player2SecondaryPreview.resize((30, 30))
+        if application.playerThreeSecondary.get():
+            player3secondarypath = os.path.join(dirname, 'Characters/' + application.playerThreeSecondary.get() + '/1.png')
+            player3SecondaryPreview = Image.open(player3secondarypath).convert("RGBA")
+            player3Secondary = player3SecondaryPreview.resize((30, 30))
+        if application.playerFourSecondary.get():
+            player4secondarypath = os.path.join(dirname, 'Characters/' + application.playerFourSecondary.get() + '/1.png')
+            player4SecondaryPreview = Image.open(player4secondarypath).convert("RGBA")
+            player4Secondary = player4SecondaryPreview.resize((30, 30))
+        if application.playerFiveSecondary.get():
+            player5secondarypath = os.path.join(dirname, 'Characters/' + application.playerFiveSecondary.get() + '/1.png')
+            player5SecondaryPreview = Image.open(player5secondarypath).convert("RGBA")
+            player5Secondary = player5SecondaryPreview.resize((30, 30))
+        if application.playerSixSecondary.get():
+            player6secondarypath = os.path.join(dirname, 'Characters/' + application.playerSixSecondary.get() + '/1.png')
+            player6SecondaryPreview = Image.open(player6secondarypath).convert("RGBA")
+            player6Secondary = player6SecondaryPreview.resize((30, 30))
+        if application.playerSevenSecondary.get():
+            player7secondarypath = os.path.join(dirname, 'Characters/' + application.playerSevenSecondary.get() + '/1.png')
+            player7SecondaryPreview = Image.open(player7secondarypath).convert("RGBA")
+            player7Secondary = player7SecondaryPreview.resize((30, 30))
+        if application.playerEightSecondary.get():
+            player8secondarypath = os.path.join(dirname, 'Characters/' + application.playerEightSecondary.get() + '/1.png')
+            player8SecondaryPreview = Image.open(player8secondarypath).convert("RGBA")
+            player8Secondary = player8SecondaryPreview.resize((30, 30))
 
         # Add character images
         with open(playerPortairPath, encoding='UTF8', newline='') as f:
@@ -752,6 +820,40 @@ class generateFinalGraphic:
             azRivalsPreview = Image.open(azrivals).convert("RGBA")
             finalGraphic.paste(azRivalsPreview, templateRegion, azRivalsPreview)
 
+
+        # Paste Secondaries on final graphic
+        try:
+            finalGraphic.paste(player1Secondary, player1SecLoc, player1Secondary)
+        except UnboundLocalError:
+            print("No player 1 secondary")
+        try:
+            finalGraphic.paste(player2Secondary, player2SecLoc, player2Secondary)
+        except UnboundLocalError:
+            print("No player 2 secondary")
+        try:
+            finalGraphic.paste(player3Secondary, player3SecLoc, player3Secondary)
+        except UnboundLocalError:
+            print("No player 3 secondary")
+        try:
+            finalGraphic.paste(player4Secondary, player4SecLoc, player4Secondary)
+        except UnboundLocalError:
+            print("No player 4 secondary")
+        try:
+            finalGraphic.paste(player5Secondary, player5SecLoc, player5Secondary)
+        except UnboundLocalError:
+            print("No player 5 secondary")
+        try:
+            finalGraphic.paste(player6Secondary, player6SecLoc, player6Secondary)
+        except UnboundLocalError:
+            print("No player 6 secondary")
+        try:
+            finalGraphic.paste(player7Secondary, player7SecLoc, player7Secondary)
+        except UnboundLocalError:
+            print("No player 7 secondary")
+        try:
+            finalGraphic.paste(player8Secondary, player8SecLoc, player8Secondary)
+        except UnboundLocalError:
+            print("No player 8 secondary")
 
         # Add Text
         # font = ImageFont.truetype(<font-file>, <font-size>)
