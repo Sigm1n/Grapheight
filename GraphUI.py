@@ -584,7 +584,6 @@ class generateFinalGraphic:
         player1ImageSize = (483, 483)
         player1Number = (75, 100, 536, 618)
         player1SecLoc = (480, 155, 510, 185)
-        #player1Zoom = (83, 0, 276, 193)
         player2Region = (553, 135, 811, 393)  # (left, upper, right, lower)
         player2ImageSize = (258, 258)
         player2Number = (562, 125, 536, 618)
@@ -643,70 +642,69 @@ class generateFinalGraphic:
         if application.playerOneChar.get():
             player1portraitpath = os.path.join(dirname, 'Characters/' + application.playerOneChar.get() + '/square.png')
             portraitpreview = Image.open(player1portraitpath).convert("RGBA")
-            #portraitpreview = portraitpreview.crop(player1Zoom)
-            player1Image = portraitpreview.resize(player1ImageSize)
+            player1Image = portraitpreview.resize(player1ImageSize, resample=Image.NEAREST)
         if application.playerTwoChar.get():
             player2portraitpath = os.path.join(dirname, 'Characters/' + application.playerTwoChar.get() + '/square.png')
             portraitpreview = Image.open(player2portraitpath).convert("RGBA")
-            player2Image = portraitpreview.resize(player2ImageSize)
+            player2Image = portraitpreview.resize(player2ImageSize, resample=Image.NEAREST)
         if application.playerThreeChar.get():
             player3portraitpath = os.path.join(dirname, 'Characters/' + application.playerThreeChar.get() + '/square.png')
             portraitpreview = Image.open(player3portraitpath).convert("RGBA")
-            player3Image = portraitpreview.resize(player3ImageSize)
+            player3Image = portraitpreview.resize(player3ImageSize, resample=Image.NEAREST)
         if application.playerFourChar.get():
             player4portraitpath = os.path.join(dirname, 'Characters/' + application.playerFourChar.get() + '/square.png')
             portraitpreview = Image.open(player4portraitpath).convert("RGBA")
-            player4Image = portraitpreview.resize(player4ImageSize)
+            player4Image = portraitpreview.resize(player4ImageSize, resample=Image.NEAREST)
         if application.playerFiveChar.get():
             player5portraitpath = os.path.join(dirname, 'Characters/' + application.playerFiveChar.get() + '/square.png')
             portraitpreview = Image.open(player5portraitpath).convert("RGBA")
-            player5Image = portraitpreview.resize(player5ImageSize)
+            player5Image = portraitpreview.resize(player5ImageSize, resample=Image.NEAREST)
         if application.playerSixChar.get():
             player6portraitpath = os.path.join(dirname, 'Characters/' + application.playerSixChar.get() + '/square.png')
             portraitpreview = Image.open(player6portraitpath).convert("RGBA")
-            player6Image = portraitpreview.resize(player6ImageSize)
+            player6Image = portraitpreview.resize(player6ImageSize, resample=Image.NEAREST)
         if application.playerSevenChar.get():
             player7portraitpath = os.path.join(dirname, 'Characters/' + application.playerSevenChar.get() + '/square.png')
             portraitpreview = Image.open(player7portraitpath).convert("RGBA")
-            player7Image = portraitpreview.resize(player7ImageSize)
+            player7Image = portraitpreview.resize(player7ImageSize, resample=Image.NEAREST)
         if application.playerEightChar.get():
             player8portraitpath = os.path.join(dirname, 'Characters/' + application.playerEightChar.get() + '/square.png')
             portraitpreview = Image.open(player8portraitpath).convert("RGBA")
-            player8Image = portraitpreview.resize(player8ImageSize)
+            player8Image = portraitpreview.resize(player8ImageSize, resample=Image.NEAREST)
 
         # Set Secondaries selected from UI
         if application.playerOneSecondary.get():
             player1secondarypath = os.path.join(dirname, 'Characters/' + application.playerOneSecondary.get() + '/1.png')
             player1SecondaryPreview = Image.open(player1secondarypath).convert("RGBA")
-            player1Secondary = player1SecondaryPreview.resize((30, 30))
+            player1Secondary = player1SecondaryPreview.resize((30, 30), resample=Image.NEAREST)
         if application.playerTwoSecondary.get():
             player2secondarypath = os.path.join(dirname, 'Characters/' + application.playerTwoSecondary.get() + '/1.png')
             player2SecondaryPreview = Image.open(player2secondarypath).convert("RGBA")
-            player2Secondary = player2SecondaryPreview.resize((30, 30))
+            player2Secondary = player2SecondaryPreview.resize((30, 30), resample=Image.NEAREST)
         if application.playerThreeSecondary.get():
             player3secondarypath = os.path.join(dirname, 'Characters/' + application.playerThreeSecondary.get() + '/1.png')
             player3SecondaryPreview = Image.open(player3secondarypath).convert("RGBA")
-            player3Secondary = player3SecondaryPreview.resize((30, 30))
+            player3Secondary = player3SecondaryPreview.resize((30, 30), resample=Image.NEAREST)
         if application.playerFourSecondary.get():
             player4secondarypath = os.path.join(dirname, 'Characters/' + application.playerFourSecondary.get() + '/1.png')
             player4SecondaryPreview = Image.open(player4secondarypath).convert("RGBA")
-            player4Secondary = player4SecondaryPreview.resize((30, 30))
+            player4Secondary = player4SecondaryPreview.resize((30, 30), resample=Image.NEAREST)
         if application.playerFiveSecondary.get():
             player5secondarypath = os.path.join(dirname, 'Characters/' + application.playerFiveSecondary.get() + '/1.png')
             player5SecondaryPreview = Image.open(player5secondarypath).convert("RGBA")
-            player5Secondary = player5SecondaryPreview.resize((30, 30))
+            player5Secondary = player5SecondaryPreview.resize((30, 30), resample=Image.NEAREST)
         if application.playerSixSecondary.get():
             player6secondarypath = os.path.join(dirname, 'Characters/' + application.playerSixSecondary.get() + '/1.png')
             player6SecondaryPreview = Image.open(player6secondarypath).convert("RGBA")
-            player6Secondary = player6SecondaryPreview.resize((30, 30))
+            player6Secondary = player6SecondaryPreview.resize((30, 30), resample=Image.NEAREST)
         if application.playerSevenSecondary.get():
             player7secondarypath = os.path.join(dirname, 'Characters/' + application.playerSevenSecondary.get() + '/1.png')
             player7SecondaryPreview = Image.open(player7secondarypath).convert("RGBA")
-            player7Secondary = player7SecondaryPreview.resize((30, 30))
+            player7Secondary = player7SecondaryPreview.resize((30, 30), resample=Image.NEAREST)
         if application.playerEightSecondary.get():
             player8secondarypath = os.path.join(dirname, 'Characters/' + application.playerEightSecondary.get() + '/1.png')
             player8SecondaryPreview = Image.open(player8secondarypath).convert("RGBA")
-            player8Secondary = player8SecondaryPreview.resize((30, 30))
+            player8Secondary = player8SecondaryPreview.resize((30, 30), resample=Image.NEAREST)
 
         # Add character images
         with open(playerPortairPath, encoding='UTF8', newline='') as f:
@@ -718,42 +716,42 @@ class generateFinalGraphic:
                     if row[0].__contains__(application.playerOne.get()) or application.playerOne.get().__contains__(row[0]):
                         player1portraitpath = os.path.join(dirname, row[2])
                         portraitpreview = Image.open(player1portraitpath).convert("RGBA")
-                        player1Image = portraitpreview.resize(player1ImageSize)
+                        player1Image = portraitpreview.resize(player1ImageSize, resample=Image.NEAREST)
                 if application.playerTwo.get() != '':
                     if row[0].__contains__(application.playerTwo.get()) or application.playerTwo.get().__contains__(row[0]):
                         player2portraitpath = os.path.join(dirname, row[2])
                         portraitpreview = Image.open(player2portraitpath).convert("RGBA")
-                        player2Image = portraitpreview.resize(player2ImageSize)
+                        player2Image = portraitpreview.resize(player2ImageSize, resample=Image.NEAREST)
                 if application.playerThree.get() != '':
                     if row[0].__contains__(application.playerThree.get()) or application.playerThree.get().__contains__(row[0]):
                         player3portraitpath = os.path.join(dirname, row[2])
                         portraitpreview = Image.open(player3portraitpath).convert("RGBA")
-                        player3Image = portraitpreview.resize(player3ImageSize)
+                        player3Image = portraitpreview.resize(player3ImageSize, resample=Image.NEAREST)
                 if application.playerFour.get() != '':
                     if row[0].__contains__(application.playerFour.get()) or application.playerFour.get().__contains__(row[0]):
                         player4portraitpath = os.path.join(dirname, row[2])
                         portraitpreview = Image.open(player4portraitpath).convert("RGBA")
-                        player4Image = portraitpreview.resize(player4ImageSize)
+                        player4Image = portraitpreview.resize(player4ImageSize, resample=Image.NEAREST)
                 if application.playerFive.get() != '':
                     if row[0].__contains__(application.playerFive.get()) or application.playerFive.get().__contains__(row[0]):
                         player5portraitpath = os.path.join(dirname, row[2])
                         portraitpreview = Image.open(player5portraitpath).convert("RGBA")
-                        player5Image = portraitpreview.resize(player5ImageSize)
+                        player5Image = portraitpreview.resize(player5ImageSize, resample=Image.NEAREST)
                 if application.playerSix.get() != '':
                     if row[0].__contains__(application.playerSix.get()) or application.playerSix.get().__contains__(row[0]):
                         player6portraitpath = os.path.join(dirname, row[2])
                         portraitpreview = Image.open(player6portraitpath).convert("RGBA")
-                        player6Image = portraitpreview.resize(player6ImageSize)
+                        player6Image = portraitpreview.resize(player6ImageSize, resample=Image.NEAREST)
                 if application.playerSeven.get() != '':
                     if row[0].__contains__(application.playerSeven.get()) or application.playerSeven.get().__contains__(row[0]):
                         player7portraitpath = os.path.join(dirname, row[2])
                         portraitpreview = Image.open(player7portraitpath).convert("RGBA")
-                        player7Image = portraitpreview.resize(player7ImageSize)
+                        player7Image = portraitpreview.resize(player7ImageSize, resample=Image.NEAREST)
                 if application.playerEight.get() != '':
                     if row[0].__contains__(application.playerEight.get()) or application.playerEight.get().__contains__(row[0]):
                         player8portraitpath = os.path.join(dirname, row[2])
                         portraitpreview = Image.open(player8portraitpath).convert("RGBA")
-                        player8Image = portraitpreview.resize(player8ImageSize)
+                        player8Image = portraitpreview.resize(player8ImageSize, resample=Image.NEAREST)
 
         # Paste character portraits on final graphic
         finalGraphic.paste(templatePreview)
