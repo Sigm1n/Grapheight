@@ -23,9 +23,9 @@ with open(apikeys, encoding='UTF8', newline='') as f:
 
     # Use linked portrait if player exists
     for row in fileReader:
-        if (row[0].__contains__("CHALLONGE_API_KEY") and row[1]):
+        if row[0].__contains__("CHALLONGE_API_KEY") and row[1]:
             CHALLONGE_API_KEY = row[1]
-        if (row[0].__contains__("STARTGG_API_KEY") and row[1]):
+        if row[0].__contains__("STARTGG_API_KEY") and row[1]:
             STARTGG_API_KEY = row[1]
 
 if not CHALLONGE_API_KEY:
@@ -86,7 +86,7 @@ class mainWindow:
         # Sprite button settings
         self.characters = ('Absa', 'Clairen', 'Elliana', 'Etalus', 'Forsburn', 'Hodan', 'Kragg', 'Maypul', 'Mollo',
                            'Olympia', 'Orcane', 'Ori and Sein', 'Pomme', 'Ranno', 'Shovel Knight', 'Sylvanos',
-                           'Wraster', 'Zetterburn')
+                           'Wrastor', 'Zetterburn')
         self.playerOneChar = StringVar()
         self.playerTwoChar = StringVar()
         self.playerThreeChar = StringVar()
@@ -584,6 +584,7 @@ class generateFinalGraphic:
         player1ImageSize = (483, 483)
         player1Number = (75, 100, 536, 618)
         player1SecLoc = (480, 155, 510, 185)
+        #player1Zoom = (83, 0, 276, 193)
         player2Region = (553, 135, 811, 393)  # (left, upper, right, lower)
         player2ImageSize = (258, 258)
         player2Number = (562, 125, 536, 618)
@@ -640,35 +641,36 @@ class generateFinalGraphic:
 
         # Set Characters selected from UI
         if application.playerOneChar.get():
-            player1portraitpath = os.path.join(dirname, 'Characters/' + application.playerOneChar.get() + '/Full.png')
+            player1portraitpath = os.path.join(dirname, 'Characters/' + application.playerOneChar.get() + '/square.png')
             portraitpreview = Image.open(player1portraitpath).convert("RGBA")
+            #portraitpreview = portraitpreview.crop(player1Zoom)
             player1Image = portraitpreview.resize(player1ImageSize)
         if application.playerTwoChar.get():
-            player2portraitpath = os.path.join(dirname, 'Characters/' + application.playerTwoChar.get() + '/Full.png')
+            player2portraitpath = os.path.join(dirname, 'Characters/' + application.playerTwoChar.get() + '/square.png')
             portraitpreview = Image.open(player2portraitpath).convert("RGBA")
             player2Image = portraitpreview.resize(player2ImageSize)
         if application.playerThreeChar.get():
-            player3portraitpath = os.path.join(dirname, 'Characters/' + application.playerThreeChar.get() + '/Full.png')
+            player3portraitpath = os.path.join(dirname, 'Characters/' + application.playerThreeChar.get() + '/square.png')
             portraitpreview = Image.open(player3portraitpath).convert("RGBA")
             player3Image = portraitpreview.resize(player3ImageSize)
         if application.playerFourChar.get():
-            player4portraitpath = os.path.join(dirname, 'Characters/' + application.playerFourChar.get() + '/Full.png')
+            player4portraitpath = os.path.join(dirname, 'Characters/' + application.playerFourChar.get() + '/square.png')
             portraitpreview = Image.open(player4portraitpath).convert("RGBA")
             player4Image = portraitpreview.resize(player4ImageSize)
         if application.playerFiveChar.get():
-            player5portraitpath = os.path.join(dirname, 'Characters/' + application.playerFiveChar.get() + '/Full.png')
+            player5portraitpath = os.path.join(dirname, 'Characters/' + application.playerFiveChar.get() + '/square.png')
             portraitpreview = Image.open(player5portraitpath).convert("RGBA")
             player5Image = portraitpreview.resize(player5ImageSize)
         if application.playerSixChar.get():
-            player6portraitpath = os.path.join(dirname, 'Characters/' + application.playerSixChar.get() + '/Full.png')
+            player6portraitpath = os.path.join(dirname, 'Characters/' + application.playerSixChar.get() + '/square.png')
             portraitpreview = Image.open(player6portraitpath).convert("RGBA")
             player6Image = portraitpreview.resize(player6ImageSize)
         if application.playerSevenChar.get():
-            player7portraitpath = os.path.join(dirname, 'Characters/' + application.playerSevenChar.get() + '/Full.png')
+            player7portraitpath = os.path.join(dirname, 'Characters/' + application.playerSevenChar.get() + '/square.png')
             portraitpreview = Image.open(player7portraitpath).convert("RGBA")
             player7Image = portraitpreview.resize(player7ImageSize)
         if application.playerEightChar.get():
-            player8portraitpath = os.path.join(dirname, 'Characters/' + application.playerEightChar.get() + '/Full.png')
+            player8portraitpath = os.path.join(dirname, 'Characters/' + application.playerEightChar.get() + '/square.png')
             portraitpreview = Image.open(player8portraitpath).convert("RGBA")
             player8Image = portraitpreview.resize(player8ImageSize)
 
