@@ -86,7 +86,7 @@ class mainWindow:
         # Sprite button settings
         self.characters = ('Absa', 'Clairen', 'Elliana', 'Etalus', 'Forsburn', 'Hodan', 'Kragg', 'Maypul', 'Mollo',
                            'Olympia', 'Orcane', 'Ori and Sein', 'Pomme', 'Ranno', 'Shovel Knight', 'Sylvanos',
-                           'Wrastor', 'Zetterburn')
+                           'Wrastor', 'Zetterburn', 'Random')
         self.playerOneChar = StringVar()
         self.playerTwoChar = StringVar()
         self.playerThreeChar = StringVar()
@@ -810,7 +810,7 @@ class generateFinalGraphic:
             print("No player 8 character")
 
         try:
-            if tournamentInfo["name"].__contains__("Kregg") or tournamentInfo["name"].__contains__("Castle"):
+            if tournamentInfo["name"].__contains__("Kregg") or tournamentInfo["name"].__contains__("Castle") or tournamentInfo["name"].__contains__("King"):
                 castle = os.path.join(dirname, "Graphic/BlankCastle.png")
                 castlePreview = Image.open(castle).convert("RGBA")
                 finalGraphic.paste(castlePreview, templateRegion, castlePreview)

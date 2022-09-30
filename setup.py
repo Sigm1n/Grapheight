@@ -14,7 +14,7 @@ options = {
 setup(
     name = "Grapheight",
     options = options,
-    version = "0.1",
+    version = "0.2",
     description = 'Top 8 Graphic creator for AZ Rivals',
     executables = executables
 )
